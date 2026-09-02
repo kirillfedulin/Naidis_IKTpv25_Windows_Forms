@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Naidis_IKTpv25_Windows_Forms
+{
+    public partial class Avavorm : Form
+    {
+        TreeView tree;
+        Button nupp;
+        Label silt;
+        PictureBox pilt;
+        public Avavorm()
+        {
+            Height = 600;
+            Width = 1000;
+            Text = "Naidis IKTpv25 Windows Forms";
+            tree = new TreeView();
+            tree.Dock = DockStyle.Left;
+            tree.AfterSelect += Tree_AfterSelect;
+
+
+            TreeNode tn = new TreeNode("Elemendid");
+            tn.Nodes.Add(new TreeNode("Nupp"));
+            tn.Nodes.Add(new TreeNode("Silt"));
+            tn.Nodes.Add(new TreeNode("Pilt"));
+            tree.Nodes.Add(tn);
+
+
+            //nupp, silt ja pilt
+            nupp = new Button();
+            nupp.Text = "Valjuta mind";
+            nupp.Location = new Point(300, 100);
+            nupp.Width = 100;
+            nupp.Height = 50;
+            nupp.Click += (sender, e) => { MessageBox.Show("Nuppu vajutati!");  };
+
+            silt = new Label();
+            silt.Text = "See on silt";
+            silt.Location = new Point(300, 200);
+            silt.Font = new Font("Arial", 16, FontStyle.Bold);
+            silt.AutoSize = true;
+            silt.MouseLeave += Silt_MouseLeave;
+            silt.MouseHover += Silt_MouseHover;
+            silt.MouseDoubleClick += Silt_MouseDoubleClick;
+
+            pilt = new PictureBox();
+            pilt.Image = Image.FromFile(@"..\..\Pildid\image.jpg");
+            pilt.Location = new Point(500, 500);
+            pilt.Size = new Size(50000, 50000);
+            pilt.SizeMode = PictureBoxSizeMode.StretchImage;
+
+
+
+
+            Controls.Add(tree);
+        }
+
+        private void Silt_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            silt.BackColor = Color.Yellow;
+        }
+
+        private void Silt_MouseHover(object sender, EventArgs e)
+        {
+            silt.BackColor = Color.LightBlue;
+            silt.BorderStyle = BorderStyle.Fixed3D;
+        }
+
+        private void Silt_MouseLeave(object sender, EventArgs e)
+        {
+            silt.BackColor = Color.Red;
+        }
+
+        private void Tree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Text == "Nupp")
+            {
+                Controls.Add(nupp);
+                tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "Silt")
+            {
+                Controls.Add(silt);
+                tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "Silt")
+            {
+                Controls.Add(pilt);
+                tree.SelectedNode = null;
+            }
+        }
+    }
+}
