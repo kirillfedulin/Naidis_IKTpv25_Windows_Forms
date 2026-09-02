@@ -16,6 +16,8 @@ namespace Naidis_IKTpv25_Windows_Forms
         Button nupp;
         Label silt;
         PictureBox pilt;
+        RadioButton tumeTeema;
+        RadioButton heleTeema;
         public Avavorm()
         {
             Height = 600;
@@ -30,6 +32,8 @@ namespace Naidis_IKTpv25_Windows_Forms
             tn.Nodes.Add(new TreeNode("Nupp"));
             tn.Nodes.Add(new TreeNode("Silt"));
             tn.Nodes.Add(new TreeNode("Pilt"));
+            tn.Nodes.Add(new TreeNode("tumeTeema"));
+            tn.Nodes.Add(new TreeNode("heleTeema"));
             tree.Nodes.Add(tn);
 
 
@@ -51,15 +55,43 @@ namespace Naidis_IKTpv25_Windows_Forms
             silt.MouseDoubleClick += Silt_MouseDoubleClick;
 
             pilt = new PictureBox();
-            pilt.Image = Image.FromFile(@"..\..\Pildid\image.jpg");
-            pilt.Location = new Point(500, 500);
-            pilt.Size = new Size(50000, 50000);
+            pilt.Image = Image.FromFile(@"..\..\Pildid\mem.jpg");
+            pilt.Location = new Point(100, 100);
+            pilt.Size = new Size(200, 200);
             pilt.SizeMode = PictureBoxSizeMode.StretchImage;
+            pilt.MouseDoubleClick += Pilt_MouseDoubleClick;
 
+            tumeTeema = new RadioButton();
+            tumeTeema.Text = "Tume teema";
+            tumeTeema.Location = new Point(300, 350);
+            tumeTeema.CheckedChanged += TumeTeema;
 
+            heleTeema = new RadioButton();
+            heleTeema.Text = "Hele teema";
+            heleTeema.Location = new Point(300, 380);
+            heleTeema.CheckedChanged += HeleTeema; 
 
 
             Controls.Add(tree);
+        }
+
+        private void HeleTeema(object sender, EventArgs e)
+        {
+            BackColor = Color.White;
+        }
+
+        private void TumeTeema(object sender, EventArgs e)
+        {
+            BackColor = Color.Gray;
+        }
+
+        private void Pilt_MouseDoubleClick(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://www.youtube.com/watch?v=cqAJ3ncDgbI&list=RDcqAJ3ncDgbI&start_radio=1",
+                UseShellExecute = true
+            });
         }
 
         private void Silt_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -90,9 +122,19 @@ namespace Naidis_IKTpv25_Windows_Forms
                 Controls.Add(silt);
                 tree.SelectedNode = null;
             }
-            else if (e.Node.Text == "Silt")
+            else if (e.Node.Text == "Pilt")
             {
                 Controls.Add(pilt);
+                tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "heleTeema") 
+            {
+                Controls.Add(heleTeema);
+                tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "tumeTeema")
+            {
+                Controls.Add(tumeTeema);
                 tree.SelectedNode = null;
             }
         }

@@ -85,6 +85,7 @@
     <Content Include="Pildid\ddb1932df12df2c5f3fa516087bbfbd7-1889258115.jpg" />
     <Content Include="Pildid\image.jpg" />
     <Content Include="Pildid\mem.jpg" />
+    <Content Include="Pildid\photo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
