@@ -192,19 +192,23 @@ namespace Naidis_IKTpv25_Windows_Forms
                 tab1.Controls.Add(brauser);
 
                 tab2 = new TabPage("Fnaf 1");
+
                 WebBrowser brauser2 = new WebBrowser();
                 brauser2.Dock = DockStyle.Fill;
                 brauser2.ScriptErrorsSuppressed = true;
                 brauser2.Url = new Uri("https://irv77.github.io/hd_fnaf/1/");
+
                 tab2.Controls.Add(brauser2);
 
                 tab3 = new TabPage("+");
+
                 tabs.SelectedIndexChanged += (s, arg) =>
                 {
                     if (tabs.SelectedTab == tab3)
                     {
-                        string uuskardinimi = Interaction.InputBox("Sissesta uue vahekaardi nimi: ");
-
+                        string uuskardinimi = Interaction.InputBox(
+                            "Sisesta uue vahekaardi nimi:"
+                        );
 
                         if (string.IsNullOrWhiteSpace(uuskardinimi))
                         {
@@ -212,12 +216,63 @@ namespace Naidis_IKTpv25_Windows_Forms
                             tabs.SelectedTab = tab1;
                             return;
                         }
-                        else
+
+
+                        string veebiadress = Interaction.InputBox(
+                            "Sisesta veebiaadress, mida soovid avada:"
+                        );
+
+                        if (string.IsNullOrWhiteSpace(veebiadress))
                         {
-                            TabPage uusVahekaart = new TabPage("Uus vahekaart");
-                            tabs.TabPages.Insert(tabs.TabCount - 1, uusVahekaart);
-                            tabs.SelectedTab = uusVahekaart;
+                            MessageBox.Show("Veebiaadress ei tohi olla tühi!");
+                            tabs.SelectedTab = tab1;
+                            return;
                         }
+
+                        if (!veebiadress.StartsWith("http://") &&
+                            !veebiadress.StartsWith("https://"))
+                        {
+                            veebiadress = "https://" + veebiadress;
+                        }
+
+
+                        Uri uri;
+
+                        try
+                        {
+                            uri = new Uri(veebiadress);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Vale veebiaadress!");
+                            tabs.SelectedTab = tab1;
+                            return;
+                        }
+
+
+                        var vastus = MessageBox.Show(
+                            $"Kas soovite uue vahekaardi nimega '{uuskardinimi}'?",
+                            "Kinnita",
+                            MessageBoxButtons.YesNo
+                        );
+
+                        if (vastus == DialogResult.No)
+                        {
+                            tabs.SelectedTab = tab1;
+                            return;
+                        }
+
+
+                        TabPage uusVahekaart = new TabPage(uuskardinimi);
+                        WebBrowser uusBrauser = new WebBrowser();
+                        uusBrauser.Dock = DockStyle.Fill;
+                        uusBrauser.ScriptErrorsSuppressed = true;
+                        uusBrauser.Url = uri;
+
+                        uusVahekaart.Controls.Add(uusBrauser);
+
+                        tabs.TabPages.Insert(tabs.TabCount - 1, uusVahekaart);
+                        tabs.SelectedTab = uusVahekaart;
                     }
                 };
 
@@ -230,6 +285,7 @@ namespace Naidis_IKTpv25_Windows_Forms
 
                 tree.SelectedNode = null;
             }
+
         }
 
         private void Mruut2_CheckedChanged(object sender, EventArgs e)
