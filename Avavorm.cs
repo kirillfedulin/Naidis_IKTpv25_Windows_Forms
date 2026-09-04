@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Microsoft.VisualBasic;
 namespace Naidis_IKTpv25_Windows_Forms
 {
     public partial class Avavorm : Form
@@ -17,7 +11,7 @@ namespace Naidis_IKTpv25_Windows_Forms
         Label silt;
         PictureBox pilt;
         RadioButton tumeTeema;
-        RadioButton heleTeema;  
+        RadioButton heleTeema;
         CheckBox mruut1, mruut2;
         TextBox tbox;
         TabControl tabs;
@@ -50,7 +44,7 @@ namespace Naidis_IKTpv25_Windows_Forms
             nupp.Location = new Point(300, 100);
             nupp.Width = 100;
             nupp.Height = 50;
-            nupp.Click += (sender, e) => { MessageBox.Show("Nuppu vajutati!");  };
+            nupp.Click += (sender, e) => { MessageBox.Show("Nuppu vajutati!"); };
 
             silt = new Label();
             silt.Text = "See on silt";
@@ -76,7 +70,7 @@ namespace Naidis_IKTpv25_Windows_Forms
             heleTeema = new RadioButton();
             heleTeema.Text = "Hele teema";
             heleTeema.Location = new Point(300, 380);
-            heleTeema.CheckedChanged += HeleTeema; 
+            heleTeema.CheckedChanged += HeleTeema;
 
 
             Controls.Add(tree);
@@ -134,7 +128,7 @@ namespace Naidis_IKTpv25_Windows_Forms
                 Controls.Add(pilt);
                 tree.SelectedNode = null;
             }
-            else if (e.Node.Text == "heleTeema") 
+            else if (e.Node.Text == "heleTeema")
             {
                 Controls.Add(heleTeema);
                 tree.SelectedNode = null;
@@ -174,7 +168,7 @@ namespace Naidis_IKTpv25_Windows_Forms
                     {
                         silt.Text = tbox.Text;
                     }
-                    if (tbox.Text.Length==0)
+                    if (tbox.Text.Length == 0)
                     {
                         silt.Text = "See on silt";
                     }
@@ -204,12 +198,29 @@ namespace Naidis_IKTpv25_Windows_Forms
                 brauser2.Url = new Uri("https://irv77.github.io/hd_fnaf/1/");
                 tab2.Controls.Add(brauser2);
 
-                tab3 = new TabPage("YouTube");
-                WebBrowser brauser3 = new WebBrowser();
-                brauser3.Dock = DockStyle.Fill;
-                brauser3.ScriptErrorsSuppressed = true;
-                brauser3.Url = new Uri("https://www.youtube.com/");
-                tab3.Controls.Add(brauser3);
+                tab3 = new TabPage("+");
+                tabs.SelectedIndexChanged += (s, arg) =>
+                {
+                    if (tabs.SelectedTab == tab3)
+                    {
+                        string uuskardinimi = Interaction.InputBox("Sissesta uue vahekaardi nimi: ");
+
+
+                        if (string.IsNullOrWhiteSpace(uuskardinimi))
+                        {
+                            MessageBox.Show("Vahekaardi nimi ei tohi olla tühi!");
+                            tabs.SelectedTab = tab1;
+                            return;
+                        }
+                        else
+                        {
+                            TabPage uusVahekaart = new TabPage("Uus vahekaart");
+                            tabs.TabPages.Insert(tabs.TabCount - 1, uusVahekaart);
+                            tabs.SelectedTab = uusVahekaart;
+                        }
+                    }
+                };
+
 
                 tabs.TabPages.Add(tab1);
                 tabs.TabPages.Add(tab2);
