@@ -17,8 +17,11 @@ namespace Naidis_IKTpv25_Windows_Forms
         Label silt;
         PictureBox pilt;
         RadioButton tumeTeema;
-        RadioButton heleTeema;
+        RadioButton heleTeema;  
         CheckBox mruut1, mruut2;
+        TextBox tbox;
+        TabControl tabs;
+        TabPage tab1, tab2, tab3;
         public Avavorm()
         {
             Height = 600;
@@ -36,6 +39,8 @@ namespace Naidis_IKTpv25_Windows_Forms
             tn.Nodes.Add(new TreeNode("tumeTeema"));
             tn.Nodes.Add(new TreeNode("heleTeema"));
             tn.Nodes.Add(new TreeNode("Markeruut"));
+            tn.Nodes.Add(new TreeNode("Tekstivali"));
+            tn.Nodes.Add(new TreeNode("Vahekaardid"));
             tree.Nodes.Add(tn);
 
 
@@ -155,6 +160,64 @@ namespace Naidis_IKTpv25_Windows_Forms
 
                 Controls.Add(mruut1);
                 Controls.Add(mruut2);
+            }
+
+            else if (e.Node.Text == "Tekstivali")
+            {
+                tbox = new TextBox();
+                tbox.Location = new Point(200, 500);
+                tbox.Width = 200;
+                tbox.TextChanged += (s, arg) =>
+                {
+                    Controls.Add(silt);
+                    if (tbox.Text.Length > 0)
+                    {
+                        silt.Text = tbox.Text;
+                    }
+                    if (tbox.Text.Length==0)
+                    {
+                        silt.Text = "See on silt";
+                    }
+                };
+                Controls.Add(tbox);
+                tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "Vahekaardid")
+            {
+                tabs = new TabControl();
+                tabs.Location = new Point(500, 100);
+                tabs.Size = new Size(450, 400);
+
+                tab1 = new TabPage("Techno+TLN");
+
+                WebBrowser brauser = new WebBrowser();
+                brauser.Dock = DockStyle.Fill;
+                brauser.ScriptErrorsSuppressed = true;
+                brauser.Url = new Uri("https://techno.ee/");
+
+                tab1.Controls.Add(brauser);
+
+                tab2 = new TabPage("Fnaf 1");
+                WebBrowser brauser2 = new WebBrowser();
+                brauser2.Dock = DockStyle.Fill;
+                brauser2.ScriptErrorsSuppressed = true;
+                brauser2.Url = new Uri("https://irv77.github.io/hd_fnaf/1/");
+                tab2.Controls.Add(brauser2);
+
+                tab3 = new TabPage("YouTube");
+                WebBrowser brauser3 = new WebBrowser();
+                brauser3.Dock = DockStyle.Fill;
+                brauser3.ScriptErrorsSuppressed = true;
+                brauser3.Url = new Uri("https://www.youtube.com/");
+                tab3.Controls.Add(brauser3);
+
+                tabs.TabPages.Add(tab1);
+                tabs.TabPages.Add(tab2);
+                tabs.TabPages.Add(tab3);
+
+                Controls.Add(tabs);
+
+                tree.SelectedNode = null;
             }
         }
 
