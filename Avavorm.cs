@@ -18,6 +18,7 @@ namespace Naidis_IKTpv25_Windows_Forms
         PictureBox pilt;
         RadioButton tumeTeema;
         RadioButton heleTeema;
+        CheckBox mruut1, mruut2;
         public Avavorm()
         {
             Height = 600;
@@ -34,6 +35,7 @@ namespace Naidis_IKTpv25_Windows_Forms
             tn.Nodes.Add(new TreeNode("Pilt"));
             tn.Nodes.Add(new TreeNode("tumeTeema"));
             tn.Nodes.Add(new TreeNode("heleTeema"));
+            tn.Nodes.Add(new TreeNode("Markeruut"));
             tree.Nodes.Add(tn);
 
 
@@ -136,6 +138,41 @@ namespace Naidis_IKTpv25_Windows_Forms
             {
                 Controls.Add(tumeTeema);
                 tree.SelectedNode = null;
+            }
+            else if (e.Node.Text == "Markeruut")
+            {
+                mruut1 = new CheckBox();
+                mruut1.Text = "Tee suuremaks";
+                mruut1.Location = new Point(300, 100);
+                mruut1.AutoSize = true;
+                mruut1.CheckedChanged += Mruut1_CheckedChanged;
+
+                mruut2 = new CheckBox();
+                mruut2.Text = "Tee vaiksemaks";
+                mruut2.Location = new Point(300, 150);
+                mruut2.AutoSize = true;
+                mruut2.CheckedChanged += Mruut2_CheckedChanged;
+
+                Controls.Add(mruut1);
+                Controls.Add(mruut2);
+            }
+        }
+
+        private void Mruut2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mruut2.Checked)
+            {
+                Size = new Size(500, 300);
+                mruut2.Text = "Tee vaiksemaks";
+            }
+        }
+
+        private void Mruut1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mruut1.Checked)
+            {
+                Size = new Size(1000, 600);
+                mruut1.Text = "Tee suuremaks";
             }
         }
     }
