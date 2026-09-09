@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="menuu.xml" />
     <Content Include="Pildid\08cf4be0a8870c1aac1576804e03817f-3288794163.jpg" />
     <Content Include="Pildid\ddb1932df12df2c5f3fa516087bbfbd7-1889258115.jpg" />
     <Content Include="Pildid\image.jpg" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -302,7 +303,7 @@ namespace Naidis_IKTpv25_Windows_Forms
                 lb.Items.Add("Sinine");
                 lb.Items.Add("Kollane");
                 lb.Items.Add("Punane");
-                lb.Location = new Point(150, 50);
+                lb.Location = new Point(150, 0);
                 lb.SelectedIndexChanged += new EventHandler(Lb_SelectedIndexChanged);
                 Controls.Add(lb);
 
@@ -310,7 +311,21 @@ namespace Naidis_IKTpv25_Windows_Forms
 
             }
 
-            //else if
+            else if (e.Node.Text == "DataGridView")
+            {
+                DataSet ds = new DataSet("XML faili");
+                ds.ReadXml(@"..\..\menuu.xml");
+                DataGridView dg = new DataGridView();
+                dg.Width = 490;
+                dg.Height = 100;
+                dg.Location = new Point(500, 0);
+                dg.AutoGenerateColumns = true;
+                dg.DataSource = ds;
+                dg.DataMember = "CD";
+                Controls.Add(dg);
+
+            }
+
 
         }
 
