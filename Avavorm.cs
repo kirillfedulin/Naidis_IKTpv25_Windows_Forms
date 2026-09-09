@@ -326,7 +326,58 @@ namespace Naidis_IKTpv25_Windows_Forms
 
             }
 
+            else if (e.Node.Text == "MainMenu")
+            {
+                MainMenu menu = new MainMenu();
+                MenuItem menuFile = new MenuItem("File");
+                MenuItem menuExit = new MenuItem("Exit", new EventHandler(menuFile_Exit), Shortcut.CtrlQ);
+                menuFile.MenuItems.Add(menuExit);
+                MenuItem menuHide = new MenuItem("Hide", new EventHandler(menuFile_Hide), Shortcut.CtrlH);
+                menuFile.MenuItems.Add(menuHide);
+                MenuItem menuOpen = new MenuItem("Open", new EventHandler(menuFile_Open), Shortcut.CtrlO);
+                menuFile.MenuItems.Add(menuOpen);
+                MenuItem menuClear = new MenuItem("Clear", new EventHandler(menuFile_Clear), Shortcut.CtrlC);
+                menuFile.MenuItems.Add(menuClear);
+                menu.MenuItems.Add(menuFile);
+                Menu = menu;
+            }
+        }
+        
+        private void menuFile_Clear(object sender, EventArgs e)
+        {
+            Controls.Clear();
+        }
 
+
+        private void menuFile_Open(object sender, EventArgs e)
+        {
+            OpenForm();
+        }
+        private void OpenForm()
+        {
+            Form uusvorm = new Form();
+            uusvorm.Text = "UUS VORM";
+            uusvorm.Size = new Size(300, 300);
+            uusvorm.StartPosition = FormStartPosition.CenterParent;
+            uusvorm.Show();
+
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.Image = Image.FromFile(@"..\..\Pildid\chel.jpg");
+            pictureBox.Size = new Size(250, 200);
+            pictureBox.Location = new Point(25, 25);
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            uusvorm.Controls.Add(pictureBox);
+        }
+
+        private void menuFile_Hide(object sender, EventArgs e)
+        {
+            Hide();
+        }
+
+        private void menuFile_Exit(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void Lb_SelectedIndexChanged(object sender, EventArgs e)
