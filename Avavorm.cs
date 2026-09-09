@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
@@ -16,6 +18,7 @@ namespace Naidis_IKTpv25_Windows_Forms
         TextBox tbox;
         TabControl tabs;
         TabPage tab1, tab2, tab3;
+        ListBox lb;
         public Avavorm()
         {
             Height = 600;
@@ -35,6 +38,10 @@ namespace Naidis_IKTpv25_Windows_Forms
             tn.Nodes.Add(new TreeNode("Markeruut"));
             tn.Nodes.Add(new TreeNode("Tekstivali"));
             tn.Nodes.Add(new TreeNode("Vahekaardid"));
+            tn.Nodes.Add(new TreeNode("ListBox"));
+            tn.Nodes.Add(new TreeNode("DataGridView"));
+            tn.Nodes.Add(new TreeNode("MainMenu"));
+
             tree.Nodes.Add(tn);
 
 
@@ -224,7 +231,7 @@ namespace Naidis_IKTpv25_Windows_Forms
 
                         if (string.IsNullOrWhiteSpace(veebiadress))
                         {
-                            MessageBox.Show("Veebiaadress ei tohi olla tühi!");
+                            MessageBox.Show("Veebiaadress ei tohi olla tühi!"); 
                             tabs.SelectedTab = tab1;
                             return;
                         }
@@ -274,6 +281,8 @@ namespace Naidis_IKTpv25_Windows_Forms
                         tabs.TabPages.Insert(tabs.TabCount - 1, uusVahekaart);
                         tabs.SelectedTab = uusVahekaart;
                     }
+
+
                 };
 
 
@@ -284,8 +293,38 @@ namespace Naidis_IKTpv25_Windows_Forms
                 Controls.Add(tabs);
 
                 tree.SelectedNode = null;
+
+            }
+            else if (e.Node.Text == "ListBox")
+            {
+                lb = new ListBox();
+                lb.Items.Add("Roheline");
+                lb.Items.Add("Sinine");
+                lb.Items.Add("Kollane");
+                lb.Items.Add("Punane");
+                lb.Location = new Point(150, 50);
+                lb.SelectedIndexChanged += new EventHandler(Lb_SelectedIndexChanged);
+                Controls.Add(lb);
+
+
+
             }
 
+            //else if
+
+        }
+
+        private void Lb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (lb.SelectedItem.ToString())
+            {
+                case "Roheline": tree.BackColor = Color.Green; break;
+                case "Sinine": tree.BackColor = Color.Blue; break;
+                case "Kollane": tree.BackColor = Color.Yellow; break;
+                case "Punane": tree.BackColor = Color.Red; break;
+                default:
+                    break;
+            }
         }
 
         private void Mruut2_CheckedChanged(object sender, EventArgs e)
